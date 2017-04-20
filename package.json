@@ -1,0 +1,19 @@
+{
+  "name": "friendfinder",
+  "version": "1.0.0",
+  "description": "friend finding dating app",
+  "main": "home.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jthomasi/FriendFinder.git"
+  },
+  "author": "jesse thomas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jthomasi/FriendFinder/issues"
+  },
+  "homepage": "https://github.com/jthomasi/FriendFinder#readme"
+}
