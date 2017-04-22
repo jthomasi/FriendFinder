@@ -10,6 +10,7 @@
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
+
 </head>
 <body>
 
@@ -36,12 +37,12 @@
 
               <div class="form-group">
                 <label for="personal-name">Full Name (Required)</label>
-                <input type="text" class="form-control" id="reserve-name">
+                <input type="text" class="form-control" id="personal-name">
               </div>
 
               <div class="form-group">
                 <label for="personal-link">Image link of you (Required)</label>
-                <input type="text" class="form-control" id="reserve-phone">
+                <input type="text" class="form-control" id="personal-link">
               </div>
             </form> 
           </div>
@@ -189,7 +190,7 @@
             </select>
             <br><br>
 
-            <button type="submit" id="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-block submit">Submit</button>
           
           </div>
         </div>
@@ -207,5 +208,61 @@
 
 </body>
 </html>
+<script type="text/javascript">
+  
+  $(".submit").on("click", function(event){
+
+    // prevent default action
+    event.preventDefault();
+
+    // define scores array and pull name and link
+    var newScores = [];
+    var newName = $("#personal-name").val().trim();
+    var newLink = $("#personal-link").val().trim();
+
+    // if question is answered add to array
+    for (var i=1;i<11;i++){
+      var question = $("#q"+i).val();
+      if (question != null){
+        newScores.push(question);
+      }
+    }
+
+    // if not all questions are answered or name or link not included
+    if (newScores.length < 10 || newName == "" || newLink == "") {
+      alert("Please select an answer for all of the feilds.");
+      return;
+    }
+    // if all answered
+    else {
+
+      // create new friend object to be posted
+      var newFriend = {
+        name: newName,
+        link: newLink,
+        scores: newScores
+      }
+
+      // clearing text and answer boxes
+      $("#personal-name").val("");
+      $("#personal-link").val("");
+      for (var i=1;i<11;i++){
+        $("#q"+i).val("");
+      }
+
+      // posting to the friends list api 
+      $.post("/api/friends", newFriend, function(data){
+        if (data) {
+          console.log("Yay");
+        }
+        else {
+          console.log("Whoops! An error occured.");
+        }
+      });
+    }
+
+  });
 
 
+
+</script>
