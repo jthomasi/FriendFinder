@@ -222,9 +222,9 @@
 
     // if question is answered add to array
     for (var i=1;i<11;i++){
-      var question = $("#q"+i).val();
+      var question = parseInt($("#q"+i).val());
       if (question != null){
-        newScores.push(question);
+        newScores.push(parseInt(question));
       }
     }
 
@@ -242,6 +242,7 @@
         link: newLink,
         scores: newScores
       }
+      var currentLink = window.location.origin;
 
       // clearing text and answer boxes
       $("#personal-name").val("");
@@ -252,17 +253,10 @@
 
       // posting to the friends list api 
       $.post("/api/friends", newFriend, function(data){
-        if (data) {
-          console.log("Yay");
-        }
-        else {
-          console.log("Whoops! An error occured.");
-        }
+        if (!data) throw err;
       });
     }
 
   });
-
-
 
 </script>
