@@ -240,9 +240,10 @@
 
     // if question is answered add to array
     for (var i=1;i<11;i++){
-      var question = parseInt($("#q"+i).val());
-      if (question != null){
-        newScores.push(parseInt(question));
+      var question = $("#q"+i).val();
+      console.log(question);
+      if (question != NaN){
+        newScores.push(question);
       }
     }
 
@@ -268,10 +269,8 @@
         $("#q"+i).val("");
       }
 
-      var currentURL = window.location.origin;
-
         // AJAX post the data to the friends API. 
-      $.post(currentURL + "/api/friends", newFriend, function(data){
+      $.post("/api/friends", newFriend, function(data){
 
         // Grab the result from the AJAX post so that the best match's name and photo are displayed.
         $("#matchName").text(data.name);
