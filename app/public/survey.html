@@ -190,7 +190,7 @@
             </select>
             <br><br>
 
-            <button type="submit" class="btn btn-primary btn-lg btn-block submit">Submit</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block submit">Submit</button>
           
           </div>
         </div>
@@ -204,6 +204,24 @@
       </div>
     </footer>
 
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="resultsModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel"><strong>We found a match!</strong></h4>
+        </div>
+        <div class="modal-body">
+          <h2 id="matchName"></h2>
+          <img id="matchPhoto" src="">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
   </div>
 
 </body>
@@ -242,7 +260,6 @@
         link: newLink,
         scores: newScores
       }
-      var currentLink = window.location.origin;
 
       // clearing text and answer boxes
       $("#personal-name").val("");
@@ -251,12 +268,19 @@
         $("#q"+i).val("");
       }
 
-      // posting to the friends list api 
-      $.post("/api/friends", newFriend, function(data){
-        if (!data) throw err;
+      var currentURL = window.location.origin;
+
+        // AJAX post the data to the friends API. 
+      $.post(currentURL + "/api/friends", newFriend, function(data){
+
+        // Grab the result from the AJAX post so that the best match's name and photo are displayed.
+        $("#matchName").text(data.name);
+        $('#matchPhoto').attr("src", data.photo);
+
+        // Show the modal with the best match 
+        $("#resultsModal").modal('toggle');
+
       });
     }
-
   });
-
 </script>
